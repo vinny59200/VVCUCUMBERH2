@@ -20,28 +20,23 @@ import static org.junit.Assert.assertEquals;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @Slf4j
-public class StepDefinitions {
+public class JokeStepDefinitions {
 
     @Autowired
     private JokeRepository repo;
 
-    public static final String  DUMMY_LOCAL_JOKE_URL = "http://localhost:8080/api/jokes";
     @Autowired
-    private             MockMvc mockMvc;
+    private MockMvc mockMvc;
 
+    public static final  String                    DUMMY_LOCAL_JOKE_URL = "http://localhost:8080/api/jokes";
     //To pass data between the steps
-    private static final ThreadLocal<DummyContext> CTX_KEEPER = new ThreadLocal<>();
+    private static final ThreadLocal<DummyContext> CTX_KEEPER           = new ThreadLocal<>();
 
-    private static DummyContext context() {
-        log.error( "vv dummy context null?" + (CTX_KEEPER.get() == null) );
-        return CTX_KEEPER.get();
-    }
 
     @Before
     public void before() {
         CTX_KEEPER.set( new DummyContext() );
     }
-
 
     @When( "^the client call the app$" )
     public void frontCallOfOurAppByClient() {
@@ -51,50 +46,67 @@ public class StepDefinitions {
                                                                                                   .build() ) )
                                                                       .contentType( MediaType.APPLICATION_JSON )
                                                                       .accept( MediaType.APPLICATION_JSON );
+
         builder.accept( MediaType.APPLICATION_JSON );
+
         try {
             log.error( "vv in the when setting the current action" );
             context().setCurrentAction( this.mockMvc.perform( builder ) );
         } catch ( Exception e ) {
-            log.error( "VV error in when:" + e.getMessage() );
+            log.error( "VV error in '@When':" + e.getMessage() );
             context().setCurrentException( e );
         }
     }
 
     @Then( "^the client receives status code of (\\d+)$" )
     public void checkCallStatus( int statusCode ) throws Throwable {
-        log.error( "vv in the then getting the current action" );
+        log.error( "vv in the '@Then' getting the current action" );
         context().getCurrentAction()
                  .andExpect( status().is( statusCode ) );
     }
 
-    @And( "^the client receives server joke (.+)$" )
+    @And( "^the client receives database joke (.+)$" )
     public void checkDBRecordy( String joke ) throws Throwable {
-        log.error( "vv in the and getting the current action" );
+        log.error( "vv in the '@And' getting the current action" );
         Joke foundCreatedJoke = repo.findAll()
                                     .get( 0 );
-
-        assertEquals( getJoke().getContent(), foundCreatedJoke.getContent() );
+        assertEquals( joke, foundCreatedJoke.getContent() );
     }
 
-    @Data
-    public static class DummyContext {
-        private Exception     currentException;
-        private ResultActions currentAction;
-    }
 
-    public static String asJsonString( final Object obj ) {
-        try {
-            return new ObjectMapper().writeValueAsString( obj );
-        } catch ( Exception e ) {
-            throw new RuntimeException( e );
-        }
-    }
+    /*
+    ______     _            _
+    | ___ \   (_)          | |
+    | |_/ / __ ___   ____ _| |_ ___
+    |  __/ '__| \ \ / / _` | __/ _ \
+    | |  | |  | |\ V / (_| | ||  __/
+    \_|  |_|  |_| \_/ \__,_|\__\___|
+
+     */
 
     private Joke getJoke() {
         Joke joke = new Joke();
         joke.setContent( "Moving to Paris would be In-Seine." );
         return joke;
+    }
+
+    @Data
+    private static class DummyContext {
+        private Exception     currentException;
+        private ResultActions currentAction;
+    }
+
+    private static DummyContext context() {
+        log.error( "vv dummy context null?" + (CTX_KEEPER.get() == null) );
+        return CTX_KEEPER.get();
+    }
+
+    private static String asJsonString( final Object obj ) {
+        try {
+            return new ObjectMapper().writeValueAsString( obj );
+        } catch ( Exception e ) {
+            throw new RuntimeException( e );
+        }
     }
 
 }

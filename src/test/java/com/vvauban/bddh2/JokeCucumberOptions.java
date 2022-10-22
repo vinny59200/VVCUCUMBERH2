@@ -8,5 +8,5 @@ import org.junit.runner.RunWith;
 @CucumberOptions( glue = "com.vvauban.bddh2",
                   features = "src/test/resources",
                   plugin = "pretty" )
-public class CucumberIntegrationTest {
+public class JokeCucumberOptions {
 }

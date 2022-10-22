@@ -14,15 +14,7 @@
     <version>0.0.1-SNAPSHOT</version>
     <name>Cucumber and H2</name>
     <description>Spring boot2 in memory database example with jpa, cucumber and H2</description>
-    <url>https://vvauban.com</url>
-
-
-    <properties>
-        <!-- Dependency versions -->
-        <junit.jupiter.version>5.5.2</junit.jupiter.version>
-        <maven-surefire-plugin.version>2.22.2</maven-surefire-plugin.version>
-        <maven-jar-plugin.version>3.1.1</maven-jar-plugin.version>
-    </properties>
+    <url>https://github.com/vinny59200/VVCUCUMBERH2</url>
 
     <dependencies>
         <dependency>
@@ -51,7 +43,6 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
         </dependency>
-
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
@@ -83,16 +74,6 @@
             <version>2.27.2</version>
             <type>pom</type>
             <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>io.github.ricall.junit5-wiremock</groupId>
-            <artifactId>junit5-wiremock</artifactId>
-            <version>2.0.0</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.httpcomponents</groupId>
-            <artifactId>httpclient</artifactId>
-            <version>4.5.13</version>
         </dependency>
     </dependencies>
 

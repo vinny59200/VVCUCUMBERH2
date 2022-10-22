@@ -7,5 +7,5 @@ import org.springframework.test.context.ActiveProfiles;
 @TestConfiguration
 @ActiveProfiles( "test" )
 @ComponentScan( "com.vvauban.bddh2.repository" )
-public class DummyConfig {
+public class JokeTestConfiguration {
 }

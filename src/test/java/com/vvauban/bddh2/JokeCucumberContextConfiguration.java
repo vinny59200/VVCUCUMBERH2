@@ -5,7 +5,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 
 @CucumberContextConfiguration
-@SpringBootTest( classes = { DummyConfig.class } )
+@SpringBootTest( classes = { JokeTestConfiguration.class } )
 @AutoConfigureMockMvc
-public class ApplicationTest {
+public class JokeCucumberContextConfiguration {
 }
